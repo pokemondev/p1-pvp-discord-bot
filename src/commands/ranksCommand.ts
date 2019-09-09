@@ -28,10 +28,10 @@ export class RanksCommand {
     const ranks = this.dataSource.PvpRankDb.getRanks();
     const embed = new Discord.RichEmbed()
       .setColor(ColorService.getColorForRank())
-      //.setThumbnail(`https://play.pokemonshowdown.com/sprites/bw/${cmd.pokemon.name.replace(/ /g, '').toLowerCase()}.png`)
+      .setFooter("Details on https://pokeonecommunity.com/index.php?mod=articles&action=view&id=75")
 
     ranks.forEach((r, i) => {
-      embed.addField(`${r.rank}`, `Nº of Pokémon: ${r.count}`, true);
+      embed.addField(`${r.rank} Rank`, `Nº of Pokémon: ${r.count}`, true);
     });
 
     const msgHeader = `**__PokéOne PVP Ranks:__**`;
@@ -50,12 +50,13 @@ export class RanksCommand {
     const embed = new Discord.RichEmbed()
       .setColor(ColorService.getColorForType(firstMon.type1))
       .setThumbnail(`https://play.pokemonshowdown.com/sprites/bw/${firstMon.name.toLowerCase()}.png`)
+      .setFooter("Details on https://pokeonecommunity.com/index.php?mod=articles&action=view&id=75")
 
     pokemonInRank.forEach((mon, i) => {
       embed.addField(`${mon.name}`, `Nº of viable sets: ${mon.movesets.length}`, true);
     });
 
-    const msgHeader = `**__PokéOne PVP ${pokemonInRank[0].rank}__**`;
+    const msgHeader = `**__PokéOne PVP ${pokemonInRank[0].rank} Rank__**`;
     message.channel.send(msgHeader, embed);
   }
 }

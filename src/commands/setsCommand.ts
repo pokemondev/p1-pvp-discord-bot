@@ -1,6 +1,7 @@
 import Discord = require('discord.js');
 import { AppDataSource } from "../appDataSource";
 import { ColorService } from "../pokemon/colorService";
+import { Prefix } from '../common/config';
 
 export class SetsCommand {
   name = "sets";
@@ -13,7 +14,7 @@ export class SetsCommand {
     this.dataSource = dataSource;
   }
 
-  get usage() { return `p1!${this.name} <pokémon name>`; }
+  get usage() { return `${Prefix}${this.name} <pokémon name>`; }
 
   execute(message: any, args: any) {
 
@@ -21,8 +22,8 @@ export class SetsCommand {
       let reply = `You didn't provide the Pokémon, ${message.author}!`;
       reply += `\nThe proper usage would be: \`${this.usage}\``;
       reply += `\neg.:`;
-      reply += `\np1!${this.name} suicune`;
-      reply += `\np1!${this.name} alakazam`;
+      reply += `\n${Prefix}${this.name} suicune`;
+      reply += `\n${Prefix}${this.name} alakazam`;
       message.channel.send(reply);
       return;
     }
@@ -43,7 +44,7 @@ export class SetsCommand {
     const embed = new Discord.RichEmbed()
       .setColor(ColorService.getColorForType(pokemon.type1))
       .setThumbnail(`https://play.pokemonshowdown.com/sprites/bw/${pokemon.name.toLowerCase()}.png`)
-      .setFooter(`Find details on ${pokemonRank.movesetLink}`)
+      .setFooter(`Details on ${(pokemonRank.movesetLink || 'https://pokeonecommunity.com/index.php?mod=articles&action=view&id=75' )}`)
 
     pokemonRank.movesets.forEach((set, i) => {
       embed.addField(`${i+1}º set`, `${set}\u2006`, true);

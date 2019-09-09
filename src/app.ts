@@ -2,11 +2,11 @@ import fs = require("fs");
 import Discord = require('discord.js');
 import { Command } from './commands/command';
 import { AppDataSource } from './appDataSource';
+import { Prefix } from './common/config';
 
 // setup & load config
 require('dotenv').config();
 const dataSource = new AppDataSource();
-const prefix = 'p1!';
 
 // setup client and commands
 const client = new Discord.Client();
@@ -28,9 +28,9 @@ client.on('ready', () => {
 
 client.on('message', msg => {
 
-  if (!msg.content.startsWith(prefix) || msg.author.bot) return;
+  if (!msg.content.startsWith(Prefix) || msg.author.bot) return;
 
-  const args = msg.content.slice(prefix.length).split(/ +/);
+  const args = msg.content.slice(Prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
 
   try {

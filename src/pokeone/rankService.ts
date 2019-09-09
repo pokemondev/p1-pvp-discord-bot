@@ -21,7 +21,7 @@ export class RankService {
 
   public getRank(rankPrefix: string): RankPokemon[] {
     const rankName = Object.keys(this.ranksByName)
-                           .find(r => r.toLowerCase().startsWith(rankPrefix.toLowerCase()));
+                           .find(r => r.toLowerCase() == rankPrefix.toLowerCase());
     return this.ranksByName[rankName];
   }
 
@@ -32,9 +32,10 @@ export class RankService {
 
   private loadFileData(): void {
     this.rankDb = FileHelper.loadFileData<RankPokemon[]>("pokeone-viability-ranks.json");
+    this.rankDb.forEach(p => {
+       p.rank = p.rank.replace(" Rank", "");
+    })
     this.ranksByName = groupBy(this.rankDb, "rank") as RankMap;
-    // this.rankDb.forEach(i => {
-    //   this.pokemonMap[i.name.toLowerCase()] = i;
-    // })
+    console.log(Object.keys(this.ranksByName));
   }
 }

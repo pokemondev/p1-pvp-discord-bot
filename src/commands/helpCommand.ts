@@ -1,5 +1,6 @@
 import { Command } from "./command";
 import { AppDataSource } from "../appDataSource";
+import { Prefix } from "../common/config";
 
 export class HelpCommand implements Command {
   name = 'help';
@@ -15,13 +16,12 @@ export class HelpCommand implements Command {
   public execute(message: any, args: any) {
     const data = [];
     const commands = this.appDataSource.botCommands;
-    const prefix = '/';
 
     // general help - list all commands
     if (!args.length) {
       data.push('Here\'s a list of all my commands:');
       data.push( "```\n" + commands.map(command => command.name).join('\n') + "```");
-      data.push(`You can send \`${prefix}help [command name]\` to get info on a specific command!`);
+      data.push(`You can send \`${Prefix}help [command name]\` to get info on a specific command!`);
 
       return message.author.send(data, { split: true })
         .then(() => {
@@ -45,7 +45,7 @@ export class HelpCommand implements Command {
 
     if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`);
     if (command.description) data.push(`**Description:** ${command.description}`);
-    if ((command as any).usage) data.push(`**Usage:** ${prefix}${(command as any).usage}`);
+    if ((command as any).usage) data.push(`**Usage:** ${Prefix}${(command as any).usage}`);
 
     //data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 
